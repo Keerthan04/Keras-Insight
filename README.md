@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Keras-Insight
 
-## Getting Started
+Keras-Insight is a project that combines a Next.js frontend with a Flask backend to create a powerful RAG (Retrieval-Augmented Generation) system for the Keras documentation. It uses a vector store for efficient retrieval and Ollama with the Llama 2 model for generation.
 
-First, run the development server:
+## Project Status
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**Note: This project is still in progress and actively being improved.**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js frontend for a responsive and interactive user interface
+- Flask backend for handling API requests and business logic
+- RAG system utilizing the entire Keras documentation
+- Vector store for efficient information retrieval
+- Local Ollama integration with Llama 2 model for text generation
+- Hugging Face integration for additional NLP capabilities
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Prerequisites
 
-## Learn More
+Before you begin, ensure you have met the following requirements:
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js and npm installed
+- Python 3.7+ installed
+- Ollama installed (https://ollama.ai/)
+- Hugging Face CLI installed and configured
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Setup and Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/keras-insight.git
+   cd keras-insight
+   ```
 
-## Deploy on Vercel
+2. Set up the frontend:
+   ```
+   cd frontend
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Set up the backend:
+   ```
+   cd ../backend
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   pip install -r requirements.txt
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Install and pull the Llama 2 model for Ollama:
+   ```
+   ollama pull llama3.2
+   ```
+
+5. Log in to Hugging Face (if not already done):
+   ```
+   huggingface-cli login
+   ```
+
+## Running the Project
+
+1. Start the Flask backend:
+   ```
+   cd backend/app
+   flask --app route run --debug
+   ```
+
+2. In a new terminal, start the Next.js frontend:
+   ```
+   cd frontend
+   npm run dev
+   ```
+
+3. Open your browser and navigate to `http://localhost:3000` to use the application.
+
+## Demo Image
+
+![Keras-Insight Demo](images/keras-insight-demo.png)
+
+## Usage
+
+To use Keras-Insight:
+
+1. Once the application is running, open your web browser and navigate to `http://localhost:3000`.
+
+2. You will see a message text area on the page. Enter your query about Keras in this text area.
+
+3. Click the "Send Message" button to submit your query.
+
+4. Wait for a few moments while the system processes your request. During this time:
+   - The application will retrieve relevant information from the Keras documentation.
+   - It will then generate a response using the Llama 2 model.
+
+5. The generated response will appear in the output box on the page.
+
+6. To see detailed information about the process:
+   - Open the browser's developer tools (usually F12 or right-click and select "Inspect").
+   - Go to the Console tab to view logs about the request and response process.
+   - In your code editor, check the terminal where you're running the backend to see server-side logs.
+
+These logs can provide insights into how the RAG system is working, including the retrieval process and the generation of the response.
+
+Note: The response time may vary depending on the complexity of the query and the current load on the system.
