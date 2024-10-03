@@ -91,4 +91,9 @@ if __name__ == "__main__":
 4. google and my finetuned model usage and then doing here
 5. if ollama or other then deploying options and also both together deploy options to be seen
 6. the langraph type and extra like router for websearch and other to be seen
+7. if and error then shd do propely
+8. once message send complete reload so all the model info and all gone again
+9. the embedding and scaping all do and keep it in the pinecone so then direct to ask from that and answer got
+10. the ability to provide the history and also if we can do that
+11. answer and other metrics that shd be learnt and done
 '''
