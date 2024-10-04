@@ -3,13 +3,12 @@ from flask_cors import CORS
 from scraper.scraper import WebScraper
 from vectorStore.vectorstore import VectorStore
 from llm.llm import LLMResponse
-from llm.llm_gemini import GeminiResponse
 from langchain_ollama import OllamaEmbeddings
 from langchain_ollama import ChatOllama
 import os
 import json
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from envconfig import PINECONE_API_KEY,LANGCHAIN_API_KEY,INDEX_NAME,GEMINI_API_KEY
+from envconfig import PINECONE_API_KEY,LANGCHAIN_API_KEY,INDEX_NAME
 from vectorStore.pinecone import PineconeManager
 from vectorStore.pinecone_retriever import PineconeStorage
 
@@ -47,12 +46,12 @@ async def chat():
     print("Pinecone initialization done \n")
     
     print("reached the flask backend and started \n")
-    # local_llm = 'llama3.2'
-    # llm = ChatOllama(model=local_llm, temperature=0)
-    # llm_json_mode = ChatOllama(model=local_llm, temperature=0, format='json')
+    local_llm = 'llama3.2'
+    llm = ChatOllama(model=local_llm, temperature=0)
+    llm_json_mode = ChatOllama(model=local_llm, temperature=0, format='json')
     
-    llm_responder = GeminiResponse(GEMINI_API_KEY=GEMINI_API_KEY)
-    # scraper = WebScraper()
+    llm_responder = LLMResponse(llm=llm)
+    scraper = WebScraper()
     print("initialized the llm and scraper \n")
     
     #TODO
@@ -117,7 +116,4 @@ if __name__ == "__main__":
 
 
 12. make the landing page and when that is there the pinecone and all initialized already something so that no time for initializing and all of that and similar to others also
-
-
-for the gemini it is fast but can be more faster with the apply of the pinecone and embedding done and stored only once so only retrieve and generate to be done
 '''

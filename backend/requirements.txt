@@ -10,3 +10,7 @@ langgraph
 faiss_cpu
 Flask[async]
 sentence-transformers
+langchain-core
+langchain-community
+langchain-pinecone
+google-generativeai

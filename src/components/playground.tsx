@@ -57,7 +57,8 @@ export function Dashboard() {
     const [isLoading, setIsLoading] = useState(false);
 
     const submitMessage = async (event: React.FormEvent) => {
-      event.preventDefault(); // Prevent the default form submission
+      event.preventDefault();
+      let toastId: string | number | undefined;
 
       try {
         setIsLoading(true);
@@ -65,22 +66,35 @@ export function Dashboard() {
         setMessage("");
         setOutput("");
 
-        const toastId = toast.loading("Generating Response");
+        // Create the loading toast and store its ID
+        toastId = toast.loading("Generating Response");
 
         console.log("Request from main file is being sent \n");
 
-        // Call the generateResponse function and await the response
         const response = await generateResponse(message);
         console.log("Response in main file is \n", response);
 
-        // Update the toast to show success and update the output state
-        toast.success("Response Generated", { id: toastId });
+        if (response.error) {
+          throw new Error(String(response.error));
+        }
+
+        // Update the existing toast to show success
+        if (toastId) {
+          toast.success("Response Generated", { id: toastId });
+        }
         setOutput(response);
       } catch (error) {
         console.log("Error in main file is \n", error);
-        toast.error(String(error));
+
+        // If there's an error, update the existing toast to show the error
+        if (toastId) {
+          toast.error(String(error), { id: toastId });
+        } else {
+          // Fallback in case toastId wasn't set
+          toast.error(String(error));
+        }
       } finally {
-        setIsLoading(false); // Ensure isLoading is set to false in both success and error cases
+        setIsLoading(false);
       }
     };
 

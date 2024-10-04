@@ -13,6 +13,10 @@ export async function generateResponse(message: string) {
         console.log("response from next backend got");
         const data = await response.json();
         console.log("response in helper got by backend is \n",data)
+        if(data.error){
+            
+            throw new Error(message=data.error);
+        }
         return data.response['generation'];
     } catch (error) {
         console.log("error found in helper",error);
