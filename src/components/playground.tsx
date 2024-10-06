@@ -46,6 +46,9 @@ import {
 import { generateResponse } from "@/lib/helper";
 import { useState } from "react";
 import { Toaster, toast } from "sonner";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import Analytics from "./analytics";
+
 
 export const description =
   "An AI playground with a sidebar navigation and a main content area. The playground has a header with a settings drawer and a share button. The sidebar has navigation links and a user menu. The main content area shows a form to configure the model and messages.";
@@ -55,7 +58,8 @@ export function Dashboard() {
     const [output,setOutput] = useState("");
     // const messagePresent = message.trim() === "";
     const [isLoading, setIsLoading] = useState(false);
-
+    const [analytics,setAnalytics] = useState(true);
+    const [context,setContext] = useState("");
     const submitMessage = async (event: React.FormEvent) => {
       event.preventDefault();
       let toastId: string | number | undefined;
@@ -63,8 +67,8 @@ export function Dashboard() {
       try {
         setIsLoading(true);
         console.log("Request in main file is \n", message);
-        setMessage("");
-        setOutput("");
+        // setMessage("");
+        // setOutput("");
 
         // Create the loading toast and store its ID
         toastId = toast.loading("Generating Response");
@@ -82,7 +86,9 @@ export function Dashboard() {
         if (toastId) {
           toast.success("Response Generated", { id: toastId });
         }
-        setOutput(response);
+        setOutput(response.response['generation']);
+        setContext(response.response['context']);
+        setAnalytics(false);
       } catch (error) {
         console.log("Error in main file is \n", error);
 
@@ -317,7 +323,7 @@ export function Dashboard() {
                 </fieldset>
                 <fieldset className="grid gap-6 rounded-lg border p-4">
                   <legend className="-ml-1 px-1 text-sm font-medium">
-                    Messages
+                    Analytics
                   </legend>
                   <div className="grid gap-3">
                     <Label htmlFor="role">Role</Label>
@@ -437,11 +443,11 @@ export function Dashboard() {
               </fieldset>
               <fieldset className="grid gap-6 rounded-lg border p-4">
                 <legend className="-ml-1 px-1 text-sm font-medium">
-                  Messages
+                  Analytics
                 </legend>
                 <div className="grid gap-3">
-                  <Label htmlFor="role">Role</Label>
-                  <Select defaultValue="system">
+                  <Label htmlFor="role">View Analytics of Your Question</Label>
+                  {/* <Select defaultValue="system">
                     <SelectTrigger>
                       <SelectValue placeholder="Select a role" />
                     </SelectTrigger>
@@ -450,15 +456,32 @@ export function Dashboard() {
                       <SelectItem value="user">User</SelectItem>
                       <SelectItem value="assistant">Assistant</SelectItem>
                     </SelectContent>
-                  </Select>
+                  </Select> */}
                 </div>
                 <div className="grid gap-3">
-                  <Label htmlFor="content">Content</Label>
+                  {/* <Label htmlFor="content">Content</Label>
                   <Textarea
                     id="content"
                     placeholder="You are a..."
                     className="min-h-[9.5rem]"
-                  />
+                  /> */}
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button
+                        disabled={analytics}
+                      >
+                        View Analytics
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-[900px] w-[90vw]">
+                      <DialogHeader>
+                        <DialogTitle className="text-xl font-semibold">
+                          Analytics Results
+                        </DialogTitle>
+                      </DialogHeader>
+                      <Analytics question={message} answer={output} context={context} />DialogHeader
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </fieldset>
             </form>

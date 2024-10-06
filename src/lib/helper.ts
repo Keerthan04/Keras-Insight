@@ -17,7 +17,8 @@ export async function generateResponse(message: string) {
             
             throw new Error(message=data.error);
         }
-        return data.response['generation'];
+        // return data.response['generation'];
+        return data;
     } catch (error) {
         console.log("error found in helper",error);
         return {

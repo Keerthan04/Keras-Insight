@@ -12,6 +12,7 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from envconfig import PINECONE_API_KEY,LANGCHAIN_API_KEY,INDEX_NAME,GEMINI_API_KEY
 from vectorStore.pinecone import PineconeManager
 from vectorStore.pinecone_retriever import PineconeStorage
+from analytics.analytics import Analytics
 
 app = Flask(__name__)
 # CORS(app)
@@ -94,7 +95,21 @@ async def chat():
     generation_content = llm_responder.generate_response(question=message,context=context_string)
     print("generation done returning \n")
     
-    return jsonify({"generation": generation_content})
+    return jsonify({"generation": generation_content,"context": context_string})
+
+@app.route('/analytics',methods = ['POST'])
+async def analytics():
+    data = request.get_json()
+    question = data.get('question')
+    answer = data.get('answer')
+    context = data.get('context')
+    analytics_manager = Analytics()
+    
+    response = analytics_manager.generate_scores_and_cot(question=question,answer=answer,context=context)
+    
+    return jsonify(response)
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
@@ -120,4 +135,6 @@ if __name__ == "__main__":
 
 
 for the gemini it is fast but can be more faster with the apply of the pinecone and embedding done and stored only once so only retrieve and generate to be done
+
+13. now the analytics is done showing,so using gemini try and also the styling in frontend for it and toasting is pending that shd be taken care of
 '''
