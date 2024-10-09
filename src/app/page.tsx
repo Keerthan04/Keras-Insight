@@ -1,101 +1,111 @@
-import Image from "next/image";
+'use client'
+// import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Search, Book, Cpu, Sparkles } from "lucide-react";
+import Link from "next/link";
 
-export default function Home() {
+export default function LandingPage() {
+  // const [searchQuery, setSearchQuery] = useState("");
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
+      {/* Hero Section */}
+      <div className="container mx-auto px-4 pt-20 pb-16 text-center">
+        <h1 className="text-5xl font-bold tracking-tight mb-6">
+          <span className="text-[#D00000]">Keras</span>Insight
+        </h1>
+        <p className="text-xl text-gray-300 mb-8">
+          Your AI-powered companion for exploring Keras documentation
+        </p>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+        {/* Search Bar */}
+        {/* <div className="max-w-2xl mx-auto mb-12">
+          <div className="relative flex items-center">
+            <input
+              type="text"
+              placeholder="Ask anything about Keras..."
+              className="w-full px-4 py-3 rounded-lg border border-gray-700 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-[#D00000] placeholder-gray-400"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <Button
+              className="absolute right-2 bg-[#D00000] hover:bg-[#b00000] text-white"
+              size="sm"
+            >
+              <Search className="h-4 w-4 mr-2" />
+              Search
+            </Button>
+          </div>
+        </div> */}
+
+        {/* Features Section */}
+        <div className="grid md:grid-cols-3 gap-6 mt-16">
+          <Card className="bg-gray-900 border-gray-700 text-white">
+            <CardHeader>
+              <Book className="h-12 w-12 text-[#D00000] mx-auto mb-2" />
+              <CardTitle>Smart Documentation Search</CardTitle>
+              <CardDescription className="text-gray-400">
+                Instantly find relevant information from Keras documentation
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-300">
+                Get accurate answers powered by advanced RAG technology and the
+                latest Keras documentation
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gray-900 border-gray-700 text-white">
+            <CardHeader>
+              <Cpu className="h-12 w-12 text-[#D00000] mx-auto mb-2" />
+              <CardTitle>Intelligent Understanding</CardTitle>
+              <CardDescription className="text-gray-400">
+                Context-aware responses to your queries
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-300">
+                Our AI understands the context of your questions and provides
+                relevant, accurate information
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gray-900 border-gray-700 text-white">
+            <CardHeader>
+              <Sparkles className="h-12 w-12 text-[#D00000] mx-auto mb-2" />
+              <CardTitle>Real-time Updates</CardTitle>
+              <CardDescription className="text-gray-400">
+                Always up-to-date with latest Keras features
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-300">
+                Stay current with the newest Keras updates and documentation
+                changes
+              </p>
+            </CardContent>
+          </Card>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* CTA Section */}
+        <div className="mt-20">
+          <Button className="bg-[#D00000] hover:bg-[#b00000] text-white text-lg px-8 py-6">
+            <Link href={'/playground'}>Start Exploring Keras</Link>
+          </Button>
+          <p className="mt-4 text-gray-400">
+            No registration required. Start asking questions right away.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -110,5 +120,21 @@ TODO
 6.possibility of a db required? for what to be seen
 7. the rag prompt to be made even better like if no answer then telling as no answer and all of that to be made proper
 8. the playground adding chatcomponent for smaller screens and clean up of things those are not required
+9. the backend to be made still better using diff embedder like we can use diff embedder and create a vector store and then use it and do
+10. also the answer is not coming good like try to add diff things to it and then also add it to embedd and do 
+11. landing page done see if clerk we can add
+*/
 
+/*
+TODO
+2 main things are there VVIP
+1. one is using flask as a backend and then using and getting info so better retriever because of langraph and analytics also we are able to do 
+
+2. another one is directly using the nextjs backend and then getting answers currently this is doing the query retrieval like using vectors and hf model used and then using query not giving good results so improvements to be done are
+   i. diff embedding models like google use the one that we have in the notebook and doing nomic for this and then storing can be done and then do the things
+   ii. see if we can make for the our model of v2 something and pass it to pinecone using some webpacker,transformers library and then do like using that and doing where normal nextjs backend we can else the normal of query and then doing of queryvector using utils file and doing some improvements we can do we will see
+
+
+better is using nextjs ka only make the scraping more on diff folders and all and then have the info and also some extra info also we can have so that easy scraping wecan have and also
+better embedding to do and store int the vector store and then doing and also see how the analytics we can do and also the ui part of chat thodo improve to do
 */

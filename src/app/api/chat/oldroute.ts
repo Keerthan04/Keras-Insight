@@ -3,11 +3,11 @@
 import { Pinecone } from "@pinecone-database/pinecone";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { Message, StreamData, streamText } from "ai";
-//import { PineconeStore } from "@langchain/pinecone";
+import { PineconeStore } from "@langchain/pinecone";
 // import { Document } from "@langchain/core/documents";
-//import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/hf_transformers";
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/hf_transformers";
 
-import { queryPineconeVectorStore } from "@/app/utils";
+// import { queryPineconeVectorStore } from "@/app/utils";
 
 export const maxDuration = 60;
 // export const runtime = 'edge';
@@ -15,11 +15,11 @@ export const maxDuration = 60;
 const pinecone = new Pinecone({
   apiKey: process.env.PINECONE_API_KEY ?? "",
 });
-// const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX_NAME!);
+const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX_NAME!);
 
-// const EmbeddingModel = new HuggingFaceTransformersEmbeddings({
-//   model: "Xenova/all-MiniLM-L6-v2",
-// });
+const EmbeddingModel = new HuggingFaceTransformersEmbeddings({
+  model: "Xenova/all-MiniLM-L6-v2",
+});
 
 const google = createGoogleGenerativeAI({
   baseURL: "https://generativelanguage.googleapis.com/v1beta",
@@ -44,23 +44,23 @@ export async function POST(req: Request) {
   //   .join("\n");
   console.log("user question is \n", userQuestion);
   console.log("creating vector store \n");
-  // const vectorStore = await PineconeStore.fromExistingIndex(EmbeddingModel, {
-  //   pineconeIndex,
-  //   maxConcurrency: 5,
-  // });
+  const vectorStore = await PineconeStore.fromExistingIndex(EmbeddingModel, {
+    pineconeIndex,
+    maxConcurrency: 5,
+  });
   console.log("vector store created \n");
   console.log("retriever creation started \n");
-  // const retriever = vectorStore.asRetriever({
-  //   searchType: "mmr",
-  //   k: 3,
-  // });
+  const retriever = vectorStore.asRetriever({
+    searchType: "mmr",
+    k: 3,
+  });
   console.log("retriever creation done \n");
   console.log("getting relevant documents \n");
-  // const docs = await retriever.invoke(userQuestion);
+  const docs = await retriever.invoke(userQuestion);
   console.log("relevant docs got \n");
-  // const context = "";
-  // docs.map((m) => context.concat(m.pageContent));
-  const context = await queryPineconeVectorStore(pinecone, 'dlprojectcheck',userQuestion);
+  const context = "";
+  docs.map((m) => context.concat(m.pageContent));
+  // const context = await queryPineconeVectorStore(pinecone, 'dlprojectcheck',userQuestion);
   console.log("context is \n", context);
 
   const rag_prompt = `You are an intelligent assistant designed to provide accurate and relevant information from Keras documentation.

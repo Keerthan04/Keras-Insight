@@ -3,7 +3,7 @@ export async function generateResponse(message: string) {
     try {
         console.log("request reached to helper function \n")
         console.log("request to next backend done \n")
-        const response = await fetch("/api/chat", {
+        const response = await fetch("/api/chatbackend", {//now in chat backend we are having
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

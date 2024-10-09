@@ -2,6 +2,7 @@ import { Pinecone } from "@pinecone-database/pinecone";
 import { FeatureExtractionPipeline, pipeline } from "@xenova/transformers";
 import { HfInference } from "@huggingface/inference";
 
+
 const hf = new HfInference(process.env.HF_TOKEN!);
 export async function queryPineconeVectorStore(
   client: Pinecone,
