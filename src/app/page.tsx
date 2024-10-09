@@ -99,3 +99,16 @@ export default function Home() {
     </div>
   );
 }
+
+/*
+TODO
+1.the analytics part if required shd be done(context shown for each question however so only the results showing is enough)
+2.a landing page and login if we can 
+3. the playground page some changes of removing some info and linking the topk models temperature fields
+4.the backend and other setup now not neeeded as ai sdk is used but if toasts and all to be made
+5. clean up of code those are not required
+6.possibility of a db required? for what to be seen
+7. the rag prompt to be made even better like if no answer then telling as no answer and all of that to be made proper
+8. the playground adding chatcomponent for smaller screens and clean up of things those are not required
+
+*/

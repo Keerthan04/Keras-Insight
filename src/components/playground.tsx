@@ -48,6 +48,7 @@ import { useState } from "react";
 import { Toaster, toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import Analytics from "./analytics";
+import ChatComponent from "./chatcomponent";
 
 
 export const description =
@@ -486,7 +487,7 @@ export function Dashboard() {
               </fieldset>
             </form>
           </div>
-          <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
+          {/* <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
             <div className="flex-1">
               <Badge variant="outline">Output</Badge>
               <div
@@ -551,7 +552,8 @@ export function Dashboard() {
                 </Button>
               </div>
             </form>
-          </div>
+          </div> */}
+          <ChatComponent/>
         </main>
       </div>
     </div>

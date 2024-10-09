@@ -1,45 +1,100 @@
-import { NextRequest, NextResponse } from "next/server";
+// import {google} from '@ai-sdk/google'
+// import { queryPineconeVectorStore } from "@/utils";
+import { Pinecone } from "@pinecone-database/pinecone";
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
+import { Message, StreamData, streamText } from "ai";
+import { PineconeStore } from "@langchain/pinecone";
+// import { Document } from "@langchain/core/documents";
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/hf_transformers";
+import { queryPineconeVectorStore } from "@/app/utils";
 
-export async function POST(request: NextRequest) {
-  try {
-    // Parse the JSON body
-    const { message } = await request.json();
-    console.log("Message received at the Next.js backend:", message);
+const EmbeddingModel = new HuggingFaceTransformersEmbeddings({
+  model: "sentence-transformers/all-MiniLM-L6-v2",
+});
 
-    console.log("Attempting to connect to the Flask API...");
-    console.log(JSON.stringify({message}));
-    // Fetch request to Flask API
-    const backendResponse = await fetch(
-      `${process.env.BACKEND_API_ENDPOINT}/chat`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message }),
+export const maxDuration = 60;
+// export const runtime = 'edge';
+
+const pinecone = new Pinecone({
+    apiKey: process.env.PINECONE_API_KEY ?? "",
+});
+
+// const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX_NAME!);
+
+const google = createGoogleGenerativeAI({
+    baseURL: 'https://generativelanguage.googleapis.com/v1beta',
+    apiKey: process.env.GEMINI_API_KEY
+});
+
+const model = google('models/gemini-1.5-pro-latest', {
+    safetySettings: [
+        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
+    ],
+});
+export async function POST(req: Request) {
+
+    const reqBody = await req.json();
+    console.log("request body is \n",reqBody);
+
+    const messages: Message[] = reqBody.messages;
+    console.log("messages are \n",messages);
+    // const userQuestion = `${messages[messages.length - 1].content}`;
+    const userQuestion = messages
+      .filter((msg) => msg.role === "user") // Keep only messages from the user
+      .map((msg) => `${msg.content}`) // Map to their content
+      .join("\n");
+    console.log("user question is \n",userQuestion);
+    console.log("creating vector store \n");
+    // const vectorStore = await PineconeStore.fromExistingIndex(EmbeddingModel, {
+    //   pineconeIndex,
+    //   maxConcurrency: 5,
+    // });
+    console.log("vector store created \n");
+    console.log("retriever creation started \n");
+    // const retriever = vectorStore.asRetriever({
+    //   // searchType: "mmr", // Leave blank for standard similarity search
+    //   k: 3,
+    // });
+    console.log("retriever creation done \n");
+    console.log("getting relevant documents \n");
+    // const docs = await retriever.invoke(userQuestion)
+    // console.log("relevant docs got \n");
+    // const context ="";
+    // docs.map((m)=>context.concat(m.pageContent));
+    const context = await queryPineconeVectorStore(pinecone, 'dlprojectcheck',userQuestion);
+    console.log("context is \n",context);
+
+    const rag_prompt = `You are an intelligent assistant designed to provide accurate and relevant information from Keras documentation.
+
+    Here is the retrieved context, which may contain both explanatory text and meaningful code snippets:
+
+    ${context}
+
+    Carefully analyze the above context, considering both the text and any provided code for clarity.
+
+    Now, review the user's query:
+
+    ${userQuestion}
+
+    Generate a detailed response that accurately addresses the query using the provided context. If the context includes relevant code, incorporate it into your response. Ensure that your answer is both clear and grounded in the provided content."
+
+    Response:
+    `;
+
+
+    console.log("Data started \n");
+    const data = new StreamData();
+    data.append({
+      context : context
+    })
+    console.log("result started getting \n");
+    const result = await streamText({
+      model:model,
+      prompt:rag_prompt,
+      onFinish() {
+            data.close();
       }
-    );
+    });
 
-    // Check if Flask API response is OK
-    if (!backendResponse.ok) {
-      console.error("Error from Flask API, Status:", backendResponse.status);
-      return NextResponse.json(
-        { error: "Error connecting to Flask API" },
-        { status: 500 }
-      );
-    }
-
-    // Parse the response from Flask
-    const data = await backendResponse.json();
-    console.log("Data received from Flask API:", data);
-
-    // Send the response back to the frontend
-    return NextResponse.json({ response: data });
-  } catch (error) {
-    console.error("Error in Next.js backend:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
-  }
+    return result.toDataStreamResponse({ data });
 }

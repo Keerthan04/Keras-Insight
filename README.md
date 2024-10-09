@@ -74,7 +74,7 @@ Before you begin, ensure you have met the following requirements:
 
 ## Demo Image
 
-![Keras-Insight Demo](images/keras-insight-demo.png)
+![Keras-Insight Demo](images/working%20screenshot.png)
 
 ## Usage
 
