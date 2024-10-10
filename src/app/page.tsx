@@ -137,4 +137,6 @@ TODO
 
 better is using nextjs ka only make the scraping more on diff folders and all and then have the info and also some extra info also we can have so that easy scraping wecan have and also
 better embedding to do and store int the vector store and then doing and also see how the analytics we can do and also the ui part of chat thodo improve to do
+
+using the gemini and deploying try it and check for the local llama model how to do and using it
 */
