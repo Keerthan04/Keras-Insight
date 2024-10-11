@@ -1,5 +1,4 @@
 import { Pinecone } from "@pinecone-database/pinecone";
-import { FeatureExtractionPipeline, pipeline } from "@xenova/transformers";
 import { HfInference } from "@huggingface/inference";
 
 
@@ -20,6 +19,7 @@ export async function queryPineconeVectorStore(
   const index = client.Index(indexName);
   const queryResponse = await index.query({
     topK: 3,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     vector: queryEmbedding as any,
     includeMetadata: true,
     // includeValues: true,

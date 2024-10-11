@@ -42,6 +42,7 @@ const ChatComponent = ({ reportData }: Props) => {
               </AccordionTrigger>
               <AccordionContent className="whitespace-pre-wrap text-gray-300">
                 <Markdown
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   text={(data[data.length - 1] as any).context as string}
                 />
               </AccordionContent>

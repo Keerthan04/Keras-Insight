@@ -7,6 +7,7 @@ type Props = {
   isLoading: boolean;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Messages = ({ messages, isLoading }: Props) => {
   return (
     <div className="flex flex-col gap-4">
