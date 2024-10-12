@@ -1,102 +1,85 @@
 # Keras-Insight
 
-Keras-Insight is a project that combines a Next.js frontend with a Flask backend to create a powerful RAG (Retrieval-Augmented Generation) system for the Keras documentation. It uses a vector store for efficient retrieval and Ollama with the Llama 2 model for generation.
+Keras-Insight is an innovative AI-powered tool that combines the power of RAG (Retrieval-Augmented Generation) with the extensive Keras documentation. This project aims to provide developers with quick, accurate answers to their Keras-related questions, enhancing productivity and learning in the field of deep learning.
 
-## Project Status
+![Keras-Insight Homepage](images/homepage.png)
 
-**Note: This project is still in progress and actively being improved.**
+## Live Demo
+
+Experience Keras-Insight in action: [https://keras-insight.vercel.app/](https://keras-insight.vercel.app/)
 
 ## Features
 
-- Next.js frontend for a responsive and interactive user interface
-- Flask backend for handling API requests and business logic
-- RAG system utilizing the entire Keras documentation
-- Vector store for efficient information retrieval
-- Local Ollama integration with Llama 2 model for text generation
-- Hugging Face integration for additional NLP capabilities
+- **Intelligent Query Processing**: Utilizes advanced NLP techniques to understand and respond to user queries.
+- **RAG System**: Leverages the entire Keras documentation for comprehensive and accurate responses.
+- **Vector Store Integration**: Employs efficient information retrieval for fast and relevant results.
+- **Next.js Frontend**: Offers a responsive and user-friendly interface.
+- **Vercel AI SDK**: Enables smooth, streaming responses for an enhanced user experience.
 
-## Prerequisites
+## Project Architecture
 
-Before you begin, ensure you have met the following requirements:
+![Architecture Overview](images/architecture_overview.png)
 
-- Node.js and npm installed
-- Python 3.7+ installed
-- Ollama installed (https://ollama.ai/)
-- Hugging Face CLI installed and configured
+Our system architecture ensures efficient processing of queries and generation of responses:
 
-## Setup and Installation
+![Architecture Flowchart](images/architecture_flowchart.png)
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js and npm
+- Git
+
+### Installation
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/keras-insight.git
+   git clone https://github.com/Keerthan04/keras-insight.git
    cd keras-insight
    ```
 
-2. Set up the frontend:
+2. Install dependencies:
    ```
-   cd frontend
    npm install
    ```
 
-3. Set up the backend:
-   ```
-   cd ../backend
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   pip install -r requirements.txt
-   ```
+3. Set up credentials:
+   To access the vector store, you'll need proper credentials. Please email ckeerthankumar4@gmail.com to request access.
 
-4. Install and pull the Llama 2 model for Ollama:
+4. Start the development server:
    ```
-   ollama pull llama3.2
-   ```
-
-5. Log in to Hugging Face (if not already done):
-   ```
-   huggingface-cli login
-   ```
-
-## Running the Project
-
-1. Start the Flask backend:
-   ```
-   cd backend/app
-   flask --app route run --debug
-   ```
-
-2. In a new terminal, start the Next.js frontend:
-   ```
-   cd frontend
    npm run dev
    ```
 
-3. Open your browser and navigate to `http://localhost:3000` to use the application.
-
-## Demo Image
-
-![Keras-Insight Demo](images/working%20screenshot.png)
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
 ## Usage
 
-To use Keras-Insight:
+1. Navigate to the playground page.
+   ![Chat Page](images/Chat%20Page.png)
 
-1. Once the application is running, open your web browser and navigate to `http://localhost:3000`.
+2. Enter your Keras-related question in the input field.
 
-2. You will see a message text area on the page. Enter your query about Keras in this text area.
+3. Submit your query and wait for the AI-generated response.
+   ![Chat Response](images/ChatResponse.png)
 
-3. Click the "Send Message" button to submit your query.
+4. Explore the detailed, context-aware answers provided by Keras-Insight!
 
-4. Wait for a few moments while the system processes your request. During this time:
-   - The application will retrieve relevant information from the Keras documentation.
-   - It will then generate a response using the Llama 2 model.
+## Contributing
 
-5. The generated response will appear in the output box on the page.
+We welcome contributions to Keras-Insight! Whether it's bug fixes, feature additions, or documentation improvements, your input is valuable. Please feel free to submit pull requests or open issues on our GitHub repository.
 
-6. To see detailed information about the process:
-   - Open the browser's developer tools (usually F12 or right-click and select "Inspect").
-   - Go to the Console tab to view logs about the request and response process.
-   - In your code editor, check the terminal where you're running the backend to see server-side logs.
+## Contact
 
-These logs can provide insights into how the RAG system is working, including the retrieval process and the generation of the response.
+For any questions, suggestions, or collaboration inquiries, please contact:
 
-Note: The response time may vary depending on the complexity of the query and the current load on the system.
+Keerthan Kumar C - <ckeerthankumar4@gmail.com>
+
+## Acknowledgments
+
+- Keras Documentation
+- Vercel for hosting and Vercel AI SDK
+- All contributors and supporters of this project
+
+Thank you for your interest in Keras-Insight. I'am excited to see how this tool can assist the deep learning community!
