@@ -2,7 +2,7 @@
 
 Keras-Insight is an innovative AI-powered tool that combines the power of RAG (Retrieval-Augmented Generation) with the extensive Keras documentation. This project aims to provide developers with quick, accurate answers to their Keras-related questions, enhancing productivity and learning in the field of deep learning.
 
-![Keras-Insight Homepage](images/homepage.png)
+![Keras-Insight Homepage](images/Home%20Page.png)
 
 ## Live Demo
 
